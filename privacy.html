@@ -16,13 +16,13 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 </style>
 <nav><a href="index.html">Verbum Study</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav>
 <h1>Privacy Policy — Verbum Study</h1>
-<p><strong>Last updated:</strong> 6 September 2026</p>
+<p><strong>Last updated:</strong> 7 September 2026</p>
 <p><strong>Operator:</strong> Aiden Pecyna (Creditch)</p>
 <p><strong>Apps:</strong> Verbum Study for iPhone and iPad (<code>com.creditch.verbum.ios</code>) and Verbum Study for Mac (<code>com.creditch.verbum.macos</code>)</p>
 <p>This policy describes what Verbum Study actually does in the shipping 1.0 build. It is not a generic template.</p>
 <h2>Short version</h2>
 <p>Verbum Study is a paid app. There is no in-app purchase, no account to create, no ads, and no analytics SDK.</p>
-<p>Your Bible text lives on the device (bundled public-domain translations, plus an optional on-device study library). Notes, highlights, bookmarks, journal entries, reading progress, and settings live on the device. If you are signed into iCloud, that personal study data syncs through <strong>your</strong> iCloud private database (<code>iCloud.com.creditch.verbum</code>). Creditch does not run a server, does not operate an account system, and does not sell data.</p>
+<p>Your Bible text lives on the device (bundled public-domain translations, plus optional translations, study corpus, and Learn courses you download). Notes, highlights, bookmarks, journal entries, reading progress, and settings live on the device. If you are signed into iCloud, that personal study data syncs through <strong>your</strong> iCloud private database (<code>iCloud.com.creditch.verbum</code>). Creditch does not run a server, does not operate an account system, and does not sell data.</p>
 <h2>What we do not do</h2>
 <ul>
 <li>We do not create or require a Verbum account, email login, or profile.</li>
@@ -35,7 +35,7 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <h2>Data the app stores</h2>
 <h3>On this device</h3>
 <ul>
-<li><strong>Scripture and study corpus.</strong> Public-domain Bible translations ship in the app bundle. An optional <code>study.sqlite</code> (catechisms, public-domain commentaries, confessions, Easton&#x27;s dictionary) may also be bundled. These are reference files, not your personal data.</li>
+<li><strong>Scripture and study corpus.</strong> Public-domain Bible translations ship in the app bundle (BSB, KJV, WEB). Additional public-domain translations, an optional <code>study.sqlite</code> (catechisms, public-domain commentaries, confessions, Easton&#x27;s dictionary), and Learn course / audio packs can be downloaded on demand and then stay on the device. These are reference files, not your personal data.</li>
 <li><strong>Your study data</strong> (SwiftData, local): highlights, notes, journal entries, bookmarks, reading spot, recent chapters, reading-plan enrollment and completions, custom plans, Learn progress, and settings (translation choices, typeface, theme, reminder time, and similar preferences).</li>
 <li><strong>Widget snapshot.</strong> On iOS, a short Berean Standard Bible (BSB) verse plus today&#x27;s reading-plan labels, and a separate Learn due-count (language + how many cards are waiting), are written to the App Group <code>group.com.creditch.verbum</code> so home-screen, lock-screen, and Control Center widgets can render without opening the app. Licensed editions are never written there. The Learn payload does not include verse text.</li>
 <li><strong>Local notifications.</strong> If you enable reminders, the app schedules a rolling batch of on-device notifications (<code>UNUserNotificationCenter</code>). Each body carries BSB verse text and a deep link into the app. There is no Apple Push Notification service certificate and no push server. Authorization is requested after a reading session, not on first launch.</li>
@@ -57,10 +57,14 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <li><strong>Copy</strong> and <strong>Share</strong> on a selected verse use the system share sheet with the verse text you selected. The destination (Messages, Mail, another app) is your choice; Verbum Study does not receive a copy.</li>
 </ul>
 <h2>Networking</h2>
-<p>v1 is designed to read scripture with no network. Bundled public-domain translations are local SQLite.</p>
-<p>The only routine network use in a store build is <strong>Apple CloudKit</strong>, and only when you are signed into iCloud.</p>
-<p>Code exists for licensed remote editions (ESV / API.Bible) and for future content-pack manifests. In 1.0 those licensed rows are gated unavailable, Release archives embed blank API keys, and content-pack downloads are not wired at launch. This policy will be updated if that changes.</p>
-<p>HTTPS is used for any Apple/system networking. The app declares <code>ITSAppUsesNonExemptEncryption</code> = false (standard HTTPS only; no custom encryption).</p>
+<p>v1 is designed to read scripture offline. Bundled public-domain translations (BSB, KJV, WEB) are local SQLite.</p>
+<p>Network use in a store build:</p>
+<ul>
+<li><strong>Apple CloudKit</strong> — only when you are signed into iCloud. Syncs personal study data through your private database. There is no Verbum server.</li>
+<li><strong>Content packs (optional)</strong> — On launch the app fetches a public <code>content-manifest.json</code> from the <code>Creditch/verbum-content</code> GitHub Release (HTTPS GET). That request does not include your notes, highlights, or any other personal study data, and it does not block first chapter paint. If you choose to download an additional translation, the optional study corpus, or a Learn course / audio pack, the app downloads a static <code>.sqlite</code> file from the same Release, verifies its checksum, and keeps it on this device. Pack installs stay device-local and are never synced via CloudKit. Removing a pack deletes the local file.</li>
+<li><strong>Licensed remote editions (ESV / API.Bible)</strong> — Code exists, but every catalog row is gated unavailable in v1. Release / App Store archives embed blank API keys, so the store binary does not fetch those editions.</li>
+</ul>
+<p>HTTPS is used for any networking. The app declares <code>ITSAppUsesNonExemptEncryption</code> = false (standard HTTPS only; no custom encryption).</p>
 <h2>Permissions and system APIs</h2>
 <ul>
 <li><strong>Notifications</strong> — optional local reminders; see above.</li>
@@ -74,6 +78,7 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <h2>Third parties</h2>
 <ul>
 <li><strong>Apple.</strong> iCloud/CloudKit, Spotlight, WidgetKit, User Notifications, and (if you use it) Apple Intelligence are Apple services. Their handling of that data is governed by Apple&#x27;s privacy policy and your Apple ID / iCloud settings.</li>
+<li><strong>GitHub.</strong> Public content-pack files and the content manifest are hosted on GitHub Releases (<code>Creditch/verbum-content</code>). A download request includes ordinary HTTPS metadata (IP address, user-agent). Creditch does not receive that traffic. GitHub&#x27;s handling of it is governed by GitHub&#x27;s terms. No personal study data is sent.</li>
 <li><strong>No other third-party SDKs</strong> ship in 1.0 for analytics, ads, or crash reporting.</li>
 </ul>
 <p>Share-sheet destinations and files you export are not &quot;our&quot; third parties; you choose them.</p>
@@ -83,7 +88,7 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <h2>Sale of data</h2>
 <p>We do not sell personal information. We do not share it for cross-app tracking or advertising.</p>
 <h2>Changes</h2>
-<p>If the app starts collecting something this policy does not describe (for example, a wired content-pack download, a licensed-translation fetch, or any analytics), this policy will be updated before that ships, and the App Store privacy nutrition labels will be updated to match.</p>
+<p>If the app starts collecting something this policy does not describe (for example, a licensed-translation fetch or any analytics), this policy will be updated before that ships, and the App Store privacy nutrition labels will be updated to match.</p>
 <h2>Contact</h2>
 <p>Questions about this policy: aidenpecyna@icloud.com</p>
 <p>Operator: Aiden Pecyna (Creditch)</p>
