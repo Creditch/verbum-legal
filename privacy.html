@@ -16,12 +16,12 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 </style>
 <nav><a href="index.html">Verbum Study</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav>
 <h1>Privacy Policy — Verbum Study</h1>
-<p><strong>Last updated:</strong> 7 September 2026</p>
+<p><strong>Last updated:</strong> 24 September 2026</p>
 <p><strong>Operator:</strong> Ace Pecyna (Creditch)</p>
 <p><strong>Apps:</strong> Verbum Study for iPhone and iPad (<code>com.creditch.verbum.ios</code>) and Verbum Study for Mac (<code>com.creditch.verbum.macos</code>)</p>
-<p>This policy describes what Verbum Study actually does in the shipping 1.0 build. It is not a generic template.</p>
+<p>This policy describes what Verbum Study actually does in version 1.1.1 and later. It is not a generic template.</p>
 <h2>Short version</h2>
-<p>Verbum Study is a paid app. There is no in-app purchase, no account to create, no ads, and no analytics SDK.</p>
+<p>Verbum Study is a free download with a 7-day trial and a one-time Full Unlock purchase through the App Store. There is no subscription, no account to create, no ads, and no analytics SDK. If you bought the app when it was a paid download, you keep full access without paying again.</p>
 <p>Your Bible text lives on the device (bundled public-domain translations, plus optional translations, study corpus, and Learn courses you download). Notes, highlights, bookmarks, journal entries, reading progress, and settings live on the device. If you are signed into iCloud, that personal study data syncs through <strong>your</strong> iCloud private database (<code>iCloud.com.creditch.verbum</code>). Creditch does not run a server, does not operate an account system, and does not sell data.</p>
 <h2>What we do not do</h2>
 <ul>
@@ -41,6 +41,7 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <li><strong>Local notifications.</strong> If you enable reminders, the app schedules a rolling batch of on-device notifications (<code>UNUserNotificationCenter</code>). Each body carries BSB verse text and a deep link into the app. There is no Apple Push Notification service certificate and no push server. Authorization is requested after a reading session, not on first launch.</li>
 <li><strong>Spotlight.</strong> Notes, journal entries, and bookmarks are indexed on-device via Core Spotlight so you can find <em>your</em> writing from system search. Scripture text from the database is not indexed. Deleting an item removes it from that index.</li>
 <li><strong>Optional Apple Intelligence.</strong> On supported hardware, optional tag suggestions and note summaries use Apple&#x27;s on-device <code>SystemLanguageModel</code>. Input is only user-authored note/journal text and tags — never scripture, Strong&#x27;s, or fetched verse bodies. A summary you keep is stored on that note as a marked artifact, not mixed into the body. Creditch does not receive this content.</li>
+<li><strong>Trial and purchase status.</strong> When you start the 7-day trial, its start date is stored in this device&#x27;s Keychain (<code>ThisDeviceOnly</code>) so the trial cannot restart by reinstalling. Your unlock status is cached there too. Neither is synced through iCloud or sent to Creditch.</li>
 </ul>
 <h3>iCloud (only if you are signed in)</h3>
 <p>If iCloud is available on the device, Verbum Study uses CloudKit&#x27;s <strong>private</strong> database in the container <code>iCloud.com.creditch.verbum</code>. That database belongs to your Apple ID.</p>
@@ -65,6 +66,8 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <li><strong>Licensed remote editions (ESV / API.Bible)</strong> — Code exists, but every catalog row is gated unavailable in v1. Release / App Store archives embed blank API keys, so the store binary does not fetch those editions.</li>
 </ul>
 <p>HTTPS is used for any networking. The app declares <code>ITSAppUsesNonExemptEncryption</code> = false (standard HTTPS only; no custom encryption).</p>
+<h2>Purchases</h2>
+<p>The Full Unlock (<code>com.creditch.verbum.fullunlock</code>) is a one-time, non-consumable in-app purchase processed entirely by Apple through StoreKit. Creditch never sees your payment details, Apple ID, or billing address. To confirm whether you already own the app — as a Full Unlock purchase, through Family Sharing, or from the earlier paid download — the app asks Apple&#x27;s StoreKit for your signed transaction records on the device. Those records are verified locally and are not sent to Creditch. Refunds are handled by Apple at <a href="https://reportaproblem.apple.com">reportaproblem.apple.com</a>.</p>
 <h2>Permissions and system APIs</h2>
 <ul>
 <li><strong>Notifications</strong> — optional local reminders; see above.</li>
@@ -79,7 +82,7 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <ul>
 <li><strong>Apple.</strong> iCloud/CloudKit, Spotlight, WidgetKit, User Notifications, and (if you use it) Apple Intelligence are Apple services. Their handling of that data is governed by Apple&#x27;s privacy policy and your Apple ID / iCloud settings.</li>
 <li><strong>GitHub.</strong> Public content-pack files and the content manifest are hosted on GitHub Releases (<code>Creditch/verbum-content</code>). A download request includes ordinary HTTPS metadata (IP address, user-agent). Creditch does not receive that traffic. GitHub&#x27;s handling of it is governed by GitHub&#x27;s terms. No personal study data is sent.</li>
-<li><strong>No other third-party SDKs</strong> ship in 1.0 for analytics, ads, or crash reporting.</li>
+<li><strong>No other third-party SDKs</strong> ship for analytics, ads, or crash reporting. StoreKit is Apple&#x27;s own purchase framework, not a third-party SDK.</li>
 </ul>
 <p>Share-sheet destinations and files you export are not &quot;our&quot; third parties; you choose them.</p>
 <h2>Retention and deletion</h2>
@@ -92,6 +95,6 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <h2>Contact</h2>
 <p>Questions about this policy: verbumstudy@icloud.com</p>
 <p>Operator: Ace Pecyna (Creditch)</p>
-<p>This policy does not create an account relationship. It describes a paid, offline-first Bible app that optionally uses your iCloud account for private sync.</p>
+<p>This policy does not create an account relationship. It describes an offline-first Bible app with a one-time in-app purchase that optionally uses your iCloud account for private sync.</p>
 <footer>© 2026 Ace Pecyna · <a href="support.html">Support</a></footer>
 </html>
