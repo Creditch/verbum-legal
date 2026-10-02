@@ -16,26 +16,26 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 </style>
 <nav><a href="index.html">Verbum Study</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav>
 <h1>Privacy Policy — Verbum Study</h1>
-<p><strong>Last updated:</strong> 7 September 2026</p>
+<p><strong>Last updated:</strong> 30 September 2026</p>
 <p><strong>Operator:</strong> Ace Pecyna (Creditch)</p>
 <p><strong>Apps:</strong> Verbum Study for iPhone and iPad (<code>com.creditch.verbum.ios</code>) and Verbum Study for Mac (<code>com.creditch.verbum.macos</code>)</p>
 <p>This policy describes what Verbum Study actually does in the shipping 1.0 build. It is not a generic template.</p>
 <h2>Short version</h2>
-<p>Verbum Study is a paid app. There is no in-app purchase, no account to create, no ads, and no analytics SDK.</p>
-<p>Your Bible text lives on the device (bundled public-domain translations, plus optional translations, study corpus, and Learn courses you download). Notes, highlights, bookmarks, journal entries, reading progress, and settings live on the device. If you are signed into iCloud, that personal study data syncs through <strong>your</strong> iCloud private database (<code>iCloud.com.creditch.verbum</code>). Creditch does not run a server, does not operate an account system, and does not sell data.</p>
+<p>Verbum Study is free. There is no purchase, no in-app purchase, no trial, no ads, no donation or tip prompt, no account to create, and no analytics SDK. (StoreKit code from an earlier paid design remains in the source but is compiled out of the app.)</p>
+<p>Your Bible text lives on the device (bundled public-domain translations, plus optional translations, study corpus, Learn courses, and map packs you download). Four licensed translations (ESV, NIV, NLT, NKJV) are read online from their publishers&#x27; own services; those requests carry the passage or search words, never your personal study data. Notes, highlights, bookmarks, journal entries, reading progress, and settings live on the device. If you are signed into iCloud, that personal study data syncs through <strong>your</strong> iCloud private database (<code>iCloud.com.creditch.verbum</code>). Creditch does not run a server, does not operate an account system, and does not sell data.</p>
 <h2>What we do not do</h2>
 <ul>
 <li>We do not create or require a Verbum account, email login, or profile.</li>
 <li>We do not show ads.</li>
 <li>We do not use a third-party analytics, crash-reporting, or advertising SDK. There is no Firebase, no Mixpanel, no Sentry, no tracking pixel.</li>
-<li>We do not use App Tracking Transparency. The privacy manifest (<code>PrivacyInfo.xcprivacy</code>) declares <code>NSPrivacyTracking</code> false, with no tracking domains and no collected data types declared for tracking.</li>
+<li>We do not use App Tracking Transparency. The privacy manifest (<code>PrivacyInfo.xcprivacy</code>) declares <code>NSPrivacyTracking</code> false, with no tracking domains. Its only collected data type is the anonymous feedback you choose to send (<code>NSPrivacyCollectedDataTypeCustomerSupport</code>: not linked to you, not used for tracking, used only for app functionality / support).</li>
 <li>We do not sell, rent, or share personal information with data brokers or advertisers.</li>
-<li>We do not ship licensed-translation API keys in Release / App Store builds. Crossway (ESV) and API.Bible (CSB, NIV, and similar) remain gated and unavailable in v1, so the store binary does not fetch those editions.</li>
+<li>We do not send your notes, highlights, bookmarks, journal, reading progress, or any identifier to Bible publishers. Licensed-translation requests carry only what is needed to return the text (see &quot;Networking&quot;).</li>
 </ul>
 <h2>Data the app stores</h2>
 <h3>On this device</h3>
 <ul>
-<li><strong>Scripture and study corpus.</strong> Public-domain Bible translations ship in the app bundle (BSB, KJV, WEB). Additional public-domain translations, an optional <code>study.sqlite</code> (catechisms, public-domain commentaries, confessions, Easton&#x27;s dictionary), and Learn course / audio packs can be downloaded on demand and then stay on the device. These are reference files, not your personal data.</li>
+<li><strong>Scripture and study corpus.</strong> Public-domain Bible translations ship in the app bundle (BSB, KJV, WEB). Additional public-domain translations, an optional <code>study.sqlite</code> (catechisms, public-domain commentaries, confessions, Easton&#x27;s dictionary), and Learn course / audio packs can be downloaded on demand and then stay on the device. These are reference files, not your personal data. Licensed translations (ESV, NIV, NLT, NKJV) are never written to disk: their text is held in memory for a few recently opened chapters and cleared when the app goes to the background or quits.</li>
 <li><strong>Your study data</strong> (SwiftData, local): highlights, notes, journal entries, bookmarks, reading spot, recent chapters, reading-plan enrollment and completions, custom plans, Learn progress, and settings (translation choices, typeface, theme, reminder time, and similar preferences).</li>
 <li><strong>Widget snapshot.</strong> On iOS, a short Berean Standard Bible (BSB) verse plus today&#x27;s reading-plan labels, and a separate Learn due-count (language + how many cards are waiting), are written to the App Group <code>group.com.creditch.verbum</code> so home-screen, lock-screen, and Control Center widgets can render without opening the app. Licensed editions are never written there. The Learn payload does not include verse text.</li>
 <li><strong>Local notifications.</strong> If you enable reminders, the app schedules a rolling batch of on-device notifications (<code>UNUserNotificationCenter</code>). Each body carries BSB verse text and a deep link into the app. There is no Apple Push Notification service certificate and no push server. Authorization is requested after a reading session, not on first launch.</li>
@@ -55,14 +55,24 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <ul>
 <li><strong>Export annotations</strong> (You → iCloud) writes a Markdown or JSON file of your highlights, notes, journal, and bookmarks to a location you pick (Files, disk, etc.). That export is not uploaded by the app.</li>
 <li><strong>Copy</strong> and <strong>Share</strong> on a selected verse use the system share sheet with the verse text you selected. The destination (Messages, Mail, another app) is your choice; Verbum Study does not receive a copy.</li>
+<li><strong>Send Feedback</strong> (You → Send Feedback) is anonymous. When you tap Send, the app sends your message, whether it is a bug report or a feature request, the app version, and the iOS version, and nothing else: no name, email address, reply address, device model, identifier, or account. It goes through FormSubmit (formsubmit.co), a mail relay, to the Verbum support inbox (VerbumStudy@icloud.com). FormSubmit, like any web service, sees the network address the request comes from; Verbum does not add it to the message. Nothing is sent unless you tap Send.</li>
 </ul>
 <h2>Networking</h2>
-<p>v1 is designed to read scripture offline. Bundled public-domain translations (BSB, KJV, WEB) are local SQLite.</p>
+<p>v1 is designed to read scripture offline. Bundled public-domain translations (BSB, KJV, WEB) are local SQLite, and downloaded packs stay on the device. The licensed translations below, the optional satellite map, and feedback are the only features that need a connection each time you use them.</p>
 <p>Network use in a store build:</p>
 <ul>
 <li><strong>Apple CloudKit</strong> — only when you are signed into iCloud. Syncs personal study data through your private database. There is no Verbum server.</li>
-<li><strong>Content packs (optional)</strong> — On launch the app fetches a public <code>content-manifest.json</code> from the <code>Creditch/verbum-content</code> GitHub Release (HTTPS GET). That request does not include your notes, highlights, or any other personal study data, and it does not block first chapter paint. If you choose to download an additional translation, the optional study corpus, or a Learn course / audio pack, the app downloads a static <code>.sqlite</code> file from the same Release, verifies its checksum, and keeps it on this device. Pack installs stay device-local and are never synced via CloudKit. Removing a pack deletes the local file.</li>
-<li><strong>Licensed remote editions (ESV / API.Bible)</strong> — Code exists, but every catalog row is gated unavailable in v1. Release / App Store archives embed blank API keys, so the store binary does not fetch those editions.</li>
+<li><strong>Content packs (optional)</strong> — On launch the app fetches a public <code>content-manifest.json</code> from the <code>Creditch/verbum-content</code> GitHub Release (HTTPS GET). That request does not include your notes, highlights, or any other personal study data, and it does not block first chapter paint. If you choose to download an additional translation, the optional study corpus, a Learn course / audio pack, or the optional Atlas detailed-terrain map pack, the app downloads a static <code>.sqlite</code> file from the same Release, verifies its checksum, and keeps it on this device. Pack installs stay device-local and are never synced via CloudKit. Removing a pack deletes the local file.</li>
+<li><strong>Licensed translations (only when you open one)</strong> — ESV, NIV, NLT, and NKJV are read online through each publisher&#x27;s free, non-commercial program:
+<ul>
+<li><strong>ESV</strong> — Crossway&#x27;s ESV API (<code>api.esv.org</code>), for reading and search.</li>
+<li><strong>NLT</strong> — Tyndale&#x27;s NLT API (<code>api.nlt.to</code>), for reading and search.</li>
+<li><strong>NIV</strong> — the YouVersion Platform (<code>api.youversion.com</code>) for reading; NIV search uses API.Bible.</li>
+<li><strong>NKJV</strong> — API.Bible from the American Bible Society (<code>api.scripture.api.bible</code>), for reading and search.</li>
+</ul>
+Each HTTPS request sends the passage reference (book and chapter) or, for search, the words you typed, plus Verbum&#x27;s API key for that service. It does not include your notes, highlights, bookmarks, journal, reading progress, or any account or device identifier; there is no account to send. The text is shown for reading, Compare, and search, and is not written to disk (see &quot;On this device&quot;). Word-level study tools (interlinear, word taps, concordance) use the bundled BSB and KJV, not these editions.</li>
+<li><strong>Atlas satellite map (optional)</strong> — Atlas terrain is drawn on the device from bundled or downloaded map tiles. If you switch the basemap to Satellite, Apple MapKit fetches that imagery from Apple.</li>
+<li><strong>Feedback (only when you send it)</strong> — an HTTPS POST of your anonymous message to FormSubmit&#x27;s relay (<code>formsubmit.co</code>), which emails it to the Verbum support inbox. See &quot;You choose to move data off the device&quot;.</li>
 </ul>
 <p>HTTPS is used for any networking. The app declares <code>ITSAppUsesNonExemptEncryption</code> = false (standard HTTPS only; no custom encryption).</p>
 <h2>Permissions and system APIs</h2>
@@ -77,21 +87,23 @@ footer { margin-top: 3rem; font-size: 0.9rem; opacity: 0.7; }
 <p>Verbum Study is a Bible reading and study app, not a social network and not directed at children as a data-collection product. We do not knowingly collect personal information from children. There is no account to create. Anyone who uses the app on a device signed into iCloud is subject to Apple&#x27;s iCloud terms.</p>
 <h2>Third parties</h2>
 <ul>
-<li><strong>Apple.</strong> iCloud/CloudKit, Spotlight, WidgetKit, User Notifications, and (if you use it) Apple Intelligence are Apple services. Their handling of that data is governed by Apple&#x27;s privacy policy and your Apple ID / iCloud settings.</li>
+<li><strong>Apple.</strong> iCloud/CloudKit, Spotlight, WidgetKit, User Notifications, MapKit satellite imagery (if you choose it in Atlas), and (if you use it) Apple Intelligence are Apple services. Their handling of that data is governed by Apple&#x27;s privacy policy and your Apple ID / iCloud settings.</li>
 <li><strong>GitHub.</strong> Public content-pack files and the content manifest are hosted on GitHub Releases (<code>Creditch/verbum-content</code>). A download request includes ordinary HTTPS metadata (IP address, user-agent). Creditch does not receive that traffic. GitHub&#x27;s handling of it is governed by GitHub&#x27;s terms. No personal study data is sent.</li>
+<li><strong>Bible publishers.</strong> When you open a licensed translation, the request goes to that publisher&#x27;s service: Crossway (ESV API), Tyndale House Publishers (NLT API), YouVersion / Life.Church (YouVersion Platform, NIV), and the American Bible Society (API.Bible, NKJV and NIV search). Like any web request, it includes ordinary HTTPS metadata (IP address, user-agent). Each provider&#x27;s own terms and privacy policy govern what it does with those requests. Creditch does not receive that traffic.</li>
+<li><strong>FormSubmit.</strong> Feedback you choose to send passes through FormSubmit (<code>formsubmit.co</code>) on its way to the support inbox, and FormSubmit&#x27;s terms and privacy policy apply to it.</li>
 <li><strong>No other third-party SDKs</strong> ship in 1.0 for analytics, ads, or crash reporting.</li>
 </ul>
 <p>Share-sheet destinations and files you export are not &quot;our&quot; third parties; you choose them.</p>
 <h2>Retention and deletion</h2>
-<p>On-device data remains until you delete it in the app or delete the app. iCloud private-database records remain until you delete them, disable iCloud for the app, or Apple deletes them under your iCloud account settings. Spotlight entries are removed when the corresponding note or bookmark is deleted. Pending local notifications are removed if you turn reminders off. Widget snapshot data is in the App Group container and goes away with the app.</p>
+<p>On-device data remains until you delete it in the app or delete the app. iCloud private-database records remain until you delete them, disable iCloud for the app, or Apple deletes them under your iCloud account settings. Spotlight entries are removed when the corresponding note or bookmark is deleted. Pending local notifications are removed if you turn reminders off. Widget snapshot data is in the App Group container and goes away with the app. Feedback you send arrives as an email in the Verbum support inbox and is kept there; because it carries no name, email, or identifier, we can only find a particular message if you tell us what it said.</p>
 <p>To stop iCloud sync: sign out of iCloud, or disable iCloud for Verbum Study, in system Settings. Creditch cannot reach into your private database to delete it on your behalf the way a typical &quot;delete my account&quot; email would, because there is no Verbum account.</p>
 <h2>Sale of data</h2>
 <p>We do not sell personal information. We do not share it for cross-app tracking or advertising.</p>
 <h2>Changes</h2>
-<p>If the app starts collecting something this policy does not describe (for example, a licensed-translation fetch or any analytics), this policy will be updated before that ships, and the App Store privacy nutrition labels will be updated to match.</p>
+<p>If the app starts collecting something this policy does not describe (for example, any analytics), this policy will be updated before that ships, and the App Store privacy nutrition labels will be updated to match.</p>
 <h2>Contact</h2>
 <p>Questions about this policy: verbumstudy@icloud.com</p>
 <p>Operator: Ace Pecyna (Creditch)</p>
-<p>This policy does not create an account relationship. It describes a paid, offline-first Bible app that optionally uses your iCloud account for private sync.</p>
+<p>This policy does not create an account relationship. It describes a free, offline-first Bible app that optionally uses your iCloud account for private sync.</p>
 <footer>© 2026 Ace Pecyna · <a href="support.html">Support</a></footer>
 </html>
